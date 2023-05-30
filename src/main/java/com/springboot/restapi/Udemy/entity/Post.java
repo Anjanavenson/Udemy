@@ -2,6 +2,7 @@ package com.springboot.restapi.Udemy.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,21 +10,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(
-        name = "Posts", uniqueConstraints = {@UniqueConstraint(columnNames = {"Title"})}
-)
-
+@Table(name = "Posts", uniqueConstraints = {@UniqueConstraint(columnNames = {"Title"})})
+@Builder
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private Long id;
 
-    @Column(name = "Title", nullable = false)
-    private String Title;
+    @Column(name = "title", nullable = false)
+    private String title;
 
-    @Column(name = "Description", nullable = false)
-    private String Description;
+    @Column(name = "description", nullable = false)
+    private String description;
 
-    @Column(name = "Content", nullable = false)
-    private String Content;
+    @Column(name = "content", nullable = false)
+    private String content;
 }
