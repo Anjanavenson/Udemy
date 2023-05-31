@@ -1,17 +1,18 @@
 package com.springboot.restapi.Udemy.service;
 
 import com.springboot.restapi.Udemy.payload.PostDto;
+import com.springboot.restapi.Udemy.payload.PostResponse;
 
 import java.util.List;
 
 public interface PostService {
     PostDto createPost(PostDto postDto);
 
-    List<PostDto> getAllPosts();
+    PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDir);
 
-    PostDto getPostsById(long id);
+    PostDto getPostById(long id);
 
-    PostDto updatePostById(PostDto postDto, long id);
+    PostDto updatePost(PostDto postDto, long id);
 
-    void deletePostById( long id);
+    void deletePostById(long id);
 }

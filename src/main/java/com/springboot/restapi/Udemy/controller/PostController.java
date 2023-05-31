@@ -2,6 +2,7 @@ package com.springboot.restapi.Udemy.controller;
 
 import com.springboot.restapi.Udemy.payload.PostDto;
 import com.springboot.restapi.Udemy.service.PostService;
+import com.springboot.restapi.Udemy.utils.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,439 +12,51 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/posts")
 public class PostController {
 
+    @Autowired
     private PostService postService;
 
-    @Autowired
     public PostController(PostService postService) {
         this.postService = postService;
     }
 
-    //create blog post rest api
+    // create blog post rest api
     @PostMapping
     public Object createPost(@RequestBody PostDto postDto){
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
     }
 
-    //get all post rest api
+    // get all posts rest api
     @GetMapping
-    public Object getAllPosts(){
-        return postService.getAllPosts();
+    public Object getAllPosts(
+            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir
+    ){
+        return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
     }
 
-    //get post by id rest api
+    // get post by id
     @GetMapping("/{id}")
-    public Object getPostsById(@PathVariable(name = "id") long id){
-        return ResponseEntity.ok(postService.getPostsById(id));
+    public Object getPostById(@PathVariable(name = "id") long id){
+        return ResponseEntity.ok(postService.getPostById(id));
     }
 
-    //update post by id rest api
+    // update post by id rest api
     @PutMapping("/{id}")
-    public Object updatePostById(@RequestBody PostDto postDto, @PathVariable(name = "id") long id){
-        PostDto postDto1 = postService.updatePostById(postDto, id);
-        return new ResponseEntity<>(postDto1, HttpStatus.OK);
+    public Object updatePost(@RequestBody PostDto postDto, @PathVariable(name = "id") long id){
+
+        PostDto postResponse = postService.updatePost(postDto, id);
+
+        return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
 
+    // delete post rest api
     @DeleteMapping("/{id}")
-        public Object deletePostByID(@PathVariable(name = "id") long id){
-            postService.deletePostById(id);
-            return new ResponseEntity<>("Post entity deleted successfully.", HttpStatus.OK);
+    public Object deletePost(@PathVariable(name = "id") long id){
+
+        postService.deletePostById(id);
+
+        return new ResponseEntity<>("Post entity deleted successfully.", HttpStatus.OK);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
